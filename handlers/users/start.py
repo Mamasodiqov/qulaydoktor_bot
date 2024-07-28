@@ -19,8 +19,8 @@ async def id(message: types.Message):
     telegram_id = message.from_user.id
     name = message.from_user.full_name
     request_id = int(message.text)
-    if db.select_user(telegram_id=telegram_id) is None:
-        db.add_user(telegram_id=telegram_id, name=name, request_id=request_id)
+    if await db.select_user(telegram_id=telegram_id) is None:
+        await db.add_user(telegram_id=telegram_id, name=name, request_id=request_id, file_path='')
     url = f'http://back.qulaydoktor.com/api/v1/appointment/analysis/{request_id}'
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
